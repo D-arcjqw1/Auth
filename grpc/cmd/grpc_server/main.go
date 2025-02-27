@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	pb "github.com/D-arcjqw1/Auth/api/user"
+	pb "github.com/D-arcjqw1/Auth/tree/main/grpc/api/user"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
