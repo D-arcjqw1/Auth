@@ -13,5 +13,5 @@ generate:
 	make generate-note-api
 
 generate-note-api:
-	if not exist "pkg\note_v1" mkdir "pkg\note_v1"
-	protoc --proto_path=api/note_v1 --go_out=pkg/note_v1 --go_opt=paths=source_relative --plugin=protoc-gen-go="$(LOCAL_BIN)/protoc-gen-go.exe" --go-grpc_out=pkg/note_v1 --go-grpc_opt=paths=source_relative --plugin=protoc-gen-go-grpc="$(LOCAL_BIN)/protoc-gen-go-grpc.exe" api/note_v1/note.proto
+	if not exist "pkg\user" mkdir "pkg\user"
+	protoc --proto_path=api/user --go_out=pkg/user --go_opt=paths=source_relative --plugin=protoc-gen-go="$(LOCAL_BIN)/protoc-gen-go.exe" --go-grpc_out=pkg/user --go-grpc_opt=paths=source_relative --plugin=protoc-gen-go-grpc="$(LOCAL_BIN)/protoc-gen-go-grpc.exe" api/user/user.proto

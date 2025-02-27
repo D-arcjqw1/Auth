@@ -1,4 +1,4 @@
-module github.com/D-arcjqw1/Auth
+module github.com/D-arcjqw1/Auth/grpc
 
 go 1.23
 
