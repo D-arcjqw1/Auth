@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"log"
+	"net"
 	"time"
 
-	pb "github.com/D-arcjqw1/Auth/api/user"
+	pb "github.com/D-arcjqw1/Auth/grpc/pkg/user"
+	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -38,4 +40,21 @@ func (s *UserService) Update(ctx context.Context, req *pb.UpdateUserRequest) (*e
 func (s *UserService) Delete(ctx context.Context, req *pb.DeleteUserRequest) (*emptypb.Empty, error) {
 	log.Printf("Удаление пользователя ID: %d", req.Id)
 	return &emptypb.Empty{}, nil
+}
+
+func main() {
+    // Создаем gRPC-сервер
+    server := grpc.NewServer()
+	pb.RegisterUserServiceServer(server, &UserService{})
+
+    // Запускаем сервер
+    lis, err := net.Listen("tcp", ":50051")
+    if err != nil {
+        log.Fatalf("Ошибка при запуске сервера: %v", err)
+    }
+
+    log.Println("Сервер запущен на порту :50051")
+    if err := server.Serve(lis); err != nil {
+        log.Fatalf("Ошибка сервера: %v", err)
+    }
 }
