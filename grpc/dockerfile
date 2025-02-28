@@ -1,0 +1,30 @@
+# Используем актуальную версию Golang
+FROM golang:1.23-alpine AS builder
+
+WORKDIR /app
+
+# Копируем файлы проекта в контейнер
+COPY . .
+
+# Проверяем файлы (дебаг)
+RUN ls -la /app
+
+# Загружаем зависимости
+RUN go mod download
+
+# Проверяем файлы в нужной папке (ещё дебаг)
+RUN ls -la /app/cmd/grpc_server
+
+# Собираем бинарный файл
+RUN go build -o ./bin/grpc_server ./cmd/grpc_server/main.go
+
+# Используем минимальный образ для финального контейнера
+FROM alpine:latest
+
+WORKDIR /root/
+
+COPY --from=builder /app/bin/grpc_server .
+
+RUN chmod +x ./grpc_server
+
+CMD ["./grpc_server"]
